@@ -97,6 +97,7 @@ class Chef
         end
 
         def upgrade_package(name, version)
+          # `zypper install` upgrades packages, we rely on the idempotency checks to get action :install behavior
           install_package(name, version)
         end
 
