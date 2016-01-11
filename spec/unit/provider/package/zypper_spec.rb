@@ -196,7 +196,7 @@ describe Chef::Provider::Package::Zypper do
   end
 
   describe "purge_package" do
-    it "should run remove_package with the name and version" do
+    it "should run remove with the name and version and --clean-deps" do
       shell_out_expectation!(
         "zypper --non-interactive --no-gpg-checks remove --clean-deps emacs=1.0"
       )
