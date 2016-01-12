@@ -1,30 +1,26 @@
-# Acceptance Testing for Chef Client
-This folder contains acceptance tests that are required for Chef client
-release readiness.
+# Acceptance Tests for chef
 
-## Getting started
-The tests use the _chef-acceptance_ gem as the high level framework.
-All the gems needed to run these tests can be installed with Bundler.
-
-### Important Note!
-Before running chef-acceptance, you *MUST* do the following on your current session:
+This directory contains acceptance tests for Chef Client. These tests run in Chef's release infrastructure. They are also runnable from CLI.
 
 ```
-export APPBUNDLER_ALLOW_RVM=true
+$ cd acceptance
+$ bundle install
+$ bundle exec chef-acceptance test gem_versions
 ```
 
-### Setting up and running a test suite
-To get started, do a bundle install from the acceptance directory:
-```shell
-chef/acceptance$ bundle install
-```
+Note:
 
-To get some basic info and ensure chef-acceptance can be run, do:
-```shell
-chef/acceptance$ bundle exec chef-acceptance info
-```
+* If you are using Chef Development Kit's ruby environment make sure you set this environment variable:
+  `export APPBUNDLER_ALLOW_RVM=true`
+* Correct [AWS configuration](https://github.com/test-kitchen/kitchen-ec2/#authenticating-with-aws) is required to run these tests.
 
-To run a particular test suite, do the following:
-```shell
-chef/acceptance$ bundle exec chef-acceptance test TEST_SUITE
-```
+# todo list to run acceptance tests in Jenkins:
+
+- [*] basic acceptance tests against EC2. Get it working locally.
+- [ ] integrate acceptance slave into chef's test matrix.
+- [ ] How to transport the EC2 secrets to the acceptance slave?
+- [ ] Run chef-acceptance from verify-chef.sh on the acceptance slave.
+  -  Think about running acceptance tests from within the package (including verify-chef.sh)?
+- [ ] How to hit artifactory from VPN? Use unstable in kitchen.yml.
+  - Parametrize the subnet, security groups with ENV vars.
+- [ ] What are the tags / etc... that we need to add to the VMs we're provisioning in EC2?
