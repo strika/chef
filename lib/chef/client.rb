@@ -97,6 +97,14 @@ class Chef
     attr_reader :rest
 
     #
+    # A rest object with validate_utf8 set to false.  This will not throw exceptions
+    # on non-UTF8 strings in JSON but will sanitize them so that e.g. POSTs will
+    # never fail.  Cannot be configured on a request-by-request basis, so we carry
+    # around another rest object for it.
+    #
+    attr_reader :rest_clean
+
+    #
     # The runner used to converge.
     #
     # @return [Chef::Runner]
@@ -390,8 +398,8 @@ class Chef
     # @api private
     def register_reporters
       [
-        Chef::ResourceReporter.new(rest),
-        Chef::Audit::AuditReporter.new(rest),
+        Chef::ResourceReporter.new(rest_clean),
+        Chef::Audit::AuditReporter.new(rest_clean),
       ].each do |r|
         events.register(r)
       end
@@ -603,6 +611,8 @@ class Chef
       # We now have the client key, and should use it from now on.
       @rest = Chef::ServerAPI.new(config[:chef_server_url], client_name: client_name,
                                   signing_key_filename: config[:client_key])
+      @clean_rest = Chef::ServerAPI.new(config[:chef_server_url], client_name: client_name,
+                                  signing_key_filename: config[:client_key], validate_utf8: false)
       register_reporters
     rescue Exception => e
       # TODO this should probably only ever fire if we *started* registration.
