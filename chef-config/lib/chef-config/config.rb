@@ -459,6 +459,11 @@ module ChefConfig
       if openssl_fips
         ChefConfig.logger.warn "The `openssl_fips` is still a work in progress. This feature is incomplete."
         OpenSSL.fips_mode = true
+        require 'digest'
+        require 'digest/sha1'
+        require 'digest/md5'
+        Digest::SHA1 = OpenSSL::Digest::SHA1
+        OpenSSL::Digest::MD5 = Digest::MD5
       end
     end
 
