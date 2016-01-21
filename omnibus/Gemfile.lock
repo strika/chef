@@ -1,12 +1,12 @@
 GIT
   remote: git://github.com/chef/omnibus-software.git
-  revision: e9675680662c8420b980d2d6067a93212d898f67
+  revision: 5c7ad9dbcbf11aaa6326446ab4128ec23685c33d
   specs:
     omnibus-software (4.0.0)
 
 GIT
   remote: git://github.com/chef/omnibus.git
-  revision: 88400e2feee1498e432b6c5f70707b14fb22e8c9
+  revision: c6171ecb08b3e4f20d635ede97e8f71199176196
   specs:
     omnibus (5.0.0)
       aws-sdk (~> 2)
@@ -22,12 +22,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    aws-sdk (2.2.10)
-      aws-sdk-resources (= 2.2.10)
-    aws-sdk-core (2.2.10)
+    aws-sdk (2.2.13)
+      aws-sdk-resources (= 2.2.13)
+    aws-sdk-core (2.2.13)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.10)
-      aws-sdk-core (= 2.2.10)
+    aws-sdk-resources (2.2.13)
+      aws-sdk-core (= 2.2.13)
     berkshelf (3.2.4)
       addressable (~> 2.3.4)
       berkshelf-api-client (~> 1.2)
