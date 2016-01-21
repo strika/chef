@@ -136,7 +136,7 @@ describe Chef::Provider::User::Useradd, metadata do
   end
 
   let(:username) do
-    "cf-test"
+    ([[*'a'..'z'].sample] + Array.new(9){ [*'0'..'9',*'a'..'z'].sample }).join
   end
 
   let(:uid) { nil }
