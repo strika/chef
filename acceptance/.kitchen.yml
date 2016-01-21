@@ -1,0 +1,18 @@
+suites:
+<% Dir.entries(File.dirname(__FILE__)).each do |suite|
+     next if suite.start_with?('.')
+     next unless File.directory?(File.join(File.dirname(__FILE__), suite))
+     # List of suites
+%>
+  - name: <%= suite %>
+    provisioner:
+      name: shell
+      script: |
+        apt-get update
+        apt-get install curl git
+        curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk
+        eval "$(chef shell-init bash)"
+        cd /opt/src/chef/acceptance
+        bundle update
+        bundle exec chef-acceptance test <%= suite %>
+<% end %>
