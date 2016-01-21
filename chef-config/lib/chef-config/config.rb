@@ -462,8 +462,8 @@ module ChefConfig
         require 'digest'
         require 'digest/sha1'
         require 'digest/md5'
-        Digest::SHA1 = OpenSSL::Digest::SHA1
-        OpenSSL::Digest::MD5 = Digest::MD5
+        Digest.const_set('SHA1', OpenSSL::Digest::SHA1)
+        OpenSSL::Digest.const_set('MD5', Digest::MD5)
       end
     end
 
