@@ -4,6 +4,7 @@ driver:
     X-Project: Kitchen Tests
   transport:
     ssh_key: ~/.ssh/id_rsa
+  availability_zone: <%= ENV['AWS_REGION'] %>a
 
 platforms:
   #

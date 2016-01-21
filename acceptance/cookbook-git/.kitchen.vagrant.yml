@@ -18,9 +18,6 @@ el-5
 freebsd-10
 freebsd-9
 freebsd-8
-windows-2012r2
-windows-2012
-windows-2008r2
 centos-7
 centos-6
 fedora-21
@@ -30,3 +27,13 @@ fedora-21
       box: opscode-<%= platform %>
       box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform %>_chef-provisionerless.box
 <% end %>
+
+<% %w(
+windows-server-2012r2
+windows-server-2012
+windows-server-2008r2
+).each do |platform| %>
+  - name: <%= platform %>
+    driver:
+      box: chef/<%= platform %>-standard
+# URL is atlas
