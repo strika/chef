@@ -37,3 +37,4 @@ windows-server-2008r2
     driver:
       box: chef/<%= platform %>-standard
 # URL is atlas
+<% end %>

@@ -11,7 +11,7 @@ git "#{test_run}/#{cookbook_name}" do
 end
 
 # Run the test on the current platform
-execute "kitchen converge default-windows-2012r2" do
+execute "kitchen converge default-windows-server-2012r2" do
   cwd "#{test_run}/#{cookbook_name}"
   env "KITCHEN_LOCAL_YAML" => "#{node["chef-acceptance"]["suite-dir"]}/.kitchen.vagrant.yml"
 end
