@@ -105,6 +105,9 @@ module ChefConfig
     # that upload or download files (such as knife upload, knife role from file,
     # etc.) work.
     default :chef_repo_path do
+      # TODO: this should also look at the cookbook_artifacts path, for the
+      # case when we have a repo from `chef export` that has cookbook artifacts
+      # and no cookbooks.
       if self.configuration[:cookbook_path]
         if self.configuration[:cookbook_path].kind_of?(String)
           File.expand_path("..", self.configuration[:cookbook_path])
@@ -304,6 +307,30 @@ module ChefConfig
     default :diff_filesize_threshold, 10000000
     default :diff_output_threshold,   1000000
     default :local_mode, false
+
+    # Configures the mode of operation for ChefFS, which is applied to the
+    # ChefFS-based knife commands and chef-client's local mode. (ChefFS-based
+    # knife commands include: knife delete, knife deps, knife diff, knife down,
+    # knife edit, knife list, knife show, knife upload, and knife xargs.)
+    #
+    # Valid values are:
+    # * "static": ChefFS only manages objects that exist in a traditional Chef
+    #   Repo as of Chef 11.
+    # * "everything": ChefFS manages all object types that existed on the OSS
+    #   Chef 11 server.
+    # * "hosted_everything": ChefFS manages all object types as of the Chef 12
+    #   Server, including RBAC objects and Policyfile objects (new to Chef 12).
+    #
+    # TODO: add a test
+    default :repo_mode do
+      if local_mode
+        "hosted_everything"
+      elsif chef_server_url =~ /\/+organizations\/.+/
+        "hosted_everything"
+      else
+        "everything"
+      end
+    end
 
     default :pid_file, nil
 
